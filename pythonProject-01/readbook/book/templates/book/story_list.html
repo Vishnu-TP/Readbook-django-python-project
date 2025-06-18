@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Story List{% endblock %}
+
+{% block body %}
+<div class="jumbotron">
+    <h3>Categories</h3>
+    <ul>
+        <li><a href="{% url 'book:story_list' %}">All</a></li>
+        {% for category in categories %}
+            <li>
+                <a href="{% url 'book:story_category' category.slug %}">{{ category.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Search Bar Aligned Next to "All Stories" -->
+<div class="d-flex align-items-center mb-3">
+    <h2 class="mr-3">{% if category %}{{ category.name }}{% else %}All Stories{% endif %}</h2>
+    <form action="{% url 'book:search_story' %}" method="get" class="d-flex">
+        <input type="text" name="search" class="form-control mr-2" placeholder="Search stories..." style="width: 75%;">
+        <button type="submit" class="btn btn-success">Search</button>
+    </form>
+</div>
+
+
+<hr>
+
+{% for story in stories %}
+    <div class="mt-3">
+        <h3><a href="{{ story.get_absolute_url }}">{{ story.title }}</a></h3>
+        <p>{{ story.description }}</p>
+    </div>
+
+
+{% endfor %}
+
+<hr>
+
+<!--<h4 class="text-center">{% include 'pagination.html' with page=stories %}</h4>-->
+<h4 style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+    {% include 'pagination.html' with page=stories %}
+</h4>
+<hr>
+<h3>Recent three stories:</h3>
+{% for x in recent_story %}
+<h5><a href="{{ story.get_absolute_url }}">{{ x.title }}</a></h5>
+{% endfor %}
+
+
+
+{% endblock %}
+

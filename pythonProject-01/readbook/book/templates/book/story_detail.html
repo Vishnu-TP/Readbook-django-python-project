@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ story.title }}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>{{ story.title }}</h1>
+    <p><strong>Published:</strong> {{ story.published_at }}</p>
+    <p>{{ story.body }}</p>
+</div>
+{% endblock %}
